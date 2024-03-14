@@ -27,7 +27,7 @@ spec:
       serviceAccountName: {{ include "adguard-home.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-       volumes:
+      volumes:
         - name: adguardhome-work
           persistentVolumeClaim:
             claimName: {{ include "adguard-home.fullname" . }}-work
