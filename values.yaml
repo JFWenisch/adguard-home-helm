@@ -3,13 +3,16 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
-storageclass: local-path
+
 image:
   repository: adguard/adguardhome
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v0.107.45"
-
+#####################################################
+storageclass: local-path
+ipaddress:
+####################################################
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
