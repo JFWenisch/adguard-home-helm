@@ -5,6 +5,10 @@ metadata:
   labels:
     {{- include "adguard-home.labels" . | nindent 4 }}
 spec:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+  - IPv6
+  - IPv4
   ports:
     - port: 53
       targetPort: 53
