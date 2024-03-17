@@ -20,6 +20,8 @@ spec:
       protocol: TCP
       name: dnstls
   externalIPs:
-  - {{ .Values.ipaddress }}
+  {{- range .Values.ipaddress }}
+  - {{ . }}
+  {{- end }}
   selector:
     {{- include "adguard-home.selectorLabels" . | nindent 4 }}
