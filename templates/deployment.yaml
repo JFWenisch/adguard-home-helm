@@ -35,18 +35,6 @@ spec:
         - name: adguardhome-conf
           persistentVolumeClaim:
             claimName: {{ include "adguard-home.fullname" . }}-conf
-      initContainers:
-        - name: setup-iptables
-          image: ubuntu
-          securityContext:
-            privileged: true  # Required for iptables modifications
-          command:
-            - /bin/sh
-            - -c
-            - |
-              apt update && apt install -y iptables
-              iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
-              iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port 5353
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -60,10 +48,10 @@ spec:
               name: adguardhome-work
           ports:
             - name: dnstcp
-              containerPort: 5353
+              containerPort: 53
               protocol: TCP
             - name: dnsudp
-              containerPort: 5353
+              containerPort: 53
               protocol: UDP
             - name: dnstls
               containerPort: 853
