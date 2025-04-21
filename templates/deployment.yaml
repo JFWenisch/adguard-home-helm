@@ -35,17 +35,17 @@ spec:
         - name: adguardhome-conf
           persistentVolumeClaim:
             claimName: {{ include "adguard-home.fullname" . }}-conf
-  initContainers:
-    - name: setup-iptables
-      image: busybox
-      securityContext:
-        privileged: true  # Required for modifying iptables
-      command:
-        - /bin/sh
-        - -c
-        - |
-          iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
-          iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port 5353
+      initContainers:
+        - name: setup-iptables
+          image: busybox
+          securityContext:
+            privileged: true  # Required for modifying iptables
+          command:
+            - /bin/sh
+            - -c
+            - |
+              iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
+              iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port 5353
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
