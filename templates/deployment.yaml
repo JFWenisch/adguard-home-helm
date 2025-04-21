@@ -37,15 +37,16 @@ spec:
             claimName: {{ include "adguard-home.fullname" . }}-conf
       initContainers:
         - name: setup-iptables
-          image: busybox
+          image: ubuntu
           securityContext:
-            privileged: true  # Required for modifying iptables
+            privileged: true  # Required for iptables modifications
           command:
             - /bin/sh
             - -c
             - |
-              iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 5353
-              iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port 5353
+              apt update && apt install -y iptables
+              iptables -t nat -A PREROUTING -p udp --dport 53 -j REDIRECT --to-port 1053
+              iptables -t nat -A PREROUTING -p tcp --dport 53 -j REDIRECT --to-port 1053
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
